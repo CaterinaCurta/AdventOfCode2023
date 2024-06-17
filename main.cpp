@@ -76,15 +76,11 @@ vector<Game> getGames()
         unsigned first = data.at(i).find(" ");
         unsigned last = data.at(i).find(":");
         newGame.gameId = stoi(data.at(i).substr (first, last-first));
-        cout << newGame.gameId << endl;
-        //cout << data.at(i) << endl;
         string currentGame = data.at(i);
-        //cout << currentGame << endl;
         string subsets = currentGame.substr(last+1,
                                             currentGame.length() - 1);
 
         subsets = subsets.substr(1, subsets.length() - 1);
-        //cout << subsets << endl;
         stringstream ss(subsets);
         string parsed;
         int j = 0;
@@ -162,21 +158,6 @@ vector<Game> getGames()
             j++;
         }
 
-        cout << "Red cubes: " << endl;
-        for(int k = 0; k < newGame.redCubes.size(); k++)
-        {
-            cout << newGame.redCubes.at(k) << endl;
-        }
-        cout << "Green cubes: " << endl;
-        for(int k = 0; k < newGame.greenCubes.size(); k++)
-        {
-            cout << newGame.greenCubes.at(k) << endl;
-        }
-        cout << "Blue cubes: " << endl;
-        for(int k = 0; k < newGame.blueCubes.size(); k++)
-        {
-            cout << newGame.blueCubes.at(k) << endl;
-        }
         allGames.push_back(newGame);
     }
 
@@ -211,25 +192,17 @@ void getSumOfIds()
                 bad_cubes++;
             }
         }
-        if (bad_cubes > 0)
-        {
-            cout << "Bad game id: " << allGames.at(i).gameId << endl;
-        }
-        else
-        {
-            id_sum += allGames.at(i).gameId;
-            cout << "Good id: " << allGames.at(i).gameId << endl;
-        }
+
+        if (bad_cubes == 0)  id_sum += allGames.at(i).gameId;
     }
     cout << "Sum is: " << id_sum << endl;
 }
 
-int sum_of_power_games()
+int getSumOfPowerGames()
 {
     int sum_of_games = 0;
     vector<Game> allGames = getGames();
 
-    cout << "OUTPUT FROM THE NEW FUNCTION: " << endl;
     for (int i = 0; i < allGames.size(); i++)
     {
         int power = 1;
@@ -271,7 +244,7 @@ int sum_of_power_games()
 
 int main() {
     //getTotalCalibration();
-    int power = sum_of_power_games();
+    int power = getSumOfPowerGames();
     getSumOfIds();
     cout << "The power of games is: " << power;
 
