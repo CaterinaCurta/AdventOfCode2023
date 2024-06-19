@@ -13,9 +13,20 @@ struct EngineSchematic{
     int column_position;
 };
 
-vector<EngineSchematic> parseSchematic();
-int findMaxRowIndex(vector<EngineSchematic> schematics);
-vector<char> getSymbolsOnRow(int row_index);
-void evaluateSchematics();
+struct PartNumber
+{
+    int partNumber;
+    int start_column;
+    int end_column;
+    int row_number;
+};
 
+vector<EngineSchematic> parseSchematic();
+int findMaxRowIndex();
+vector<char> getSymbolsOnRow(int row_index);
+vector<PartNumber> getPotentialPartNumbers();
+vector<EngineSchematic> getSymbols();
+char getSymbolBasedOnPosition(int row_index, int column_index);
+vector<PartNumber> getActualPartNumbers();
+int getPartNumberSum();
 #endif //ENGINESCHEMATICS_H

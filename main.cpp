@@ -41,6 +41,7 @@ int main() {
     cout << "The sum of ids is: " << sum << endl;
     cout << "The power of games is: " << power << endl;
 
-    evaluateSchematics();
+    int sum_pn = getPartNumberSum();
+    cout << "Part number sum is: " << sum_pn;
     return 0;
 }
