@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include<tuple>
 
 using namespace std;
 struct EngineSchematic{
@@ -21,7 +22,7 @@ struct PartNumber
     int row_number;
 };
 
-vector<EngineSchematic> parseSchematic();
+void parseSchematic();
 int findMaxRowIndex();
 vector<char> getSymbolsOnRow(int row_index);
 vector<PartNumber> getPotentialPartNumbers();
