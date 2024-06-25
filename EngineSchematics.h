@@ -23,11 +23,6 @@ struct PartNumber
 };
 
 void parseSchematic();
-int findMaxRowIndex();
-vector<char> getSymbolsOnRow(int row_index);
-vector<PartNumber> getPotentialPartNumbers();
-vector<EngineSchematic> getSymbols();
 char getSymbolBasedOnPosition(int row_index, int column_index);
-vector<PartNumber> getActualPartNumbers();
-int getPartNumberSum();
+
 #endif //ENGINESCHEMATICS_H

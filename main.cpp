@@ -41,20 +41,7 @@ int main() {
     cout << "The sum of ids is: " << sum << endl;
     cout << "The power of games is: " << power << endl;
 
-//    int sum_pn = getPartNumberSum();
-//    cout << "Part number sum is: " << sum_pn;
-      parseSchematic();
-//    for (PartNumber pn : part_numbers)
-//    {
-//        cout << getSymbolBasedOnPosition(pn.start_column, pn.row_number);
-//
-//    }
-//
-//    vector<PartNumber> potential_part_numbers = getPotentialPartNumbers();
-//    for (PartNumber pn : potential_part_numbers)
-//    {
-//        cout << pn.partNumber << " " << pn.start_column << " " << pn.end_column
-//             << " " << pn.row_number << endl;
-//    }
+    parseSchematic();
+
     return 0;
 }
