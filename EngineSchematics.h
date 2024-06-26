@@ -20,7 +20,6 @@ struct PartNumber
     int start_column;
     int end_column;
     int row_number;
-    int adjacent_stars = 0;
 };
 
 void parseSchematic();
