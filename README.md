@@ -1,1 +1,2 @@
-My solutions to the Advent of Code problems.
+# AdventOfCode2023
+My solutions to the 2023 Advent of Code written in C++.

@@ -7,8 +7,6 @@ bool debug = false;
 
 char getSymbolBasedOnPosition(int row_index, int column_index)
 {
-
-
     //vector<EngineSchematic> symbols = getSymbols();
     for (int i = 0; i < symbols.size(); i++)
     {
@@ -19,6 +17,36 @@ char getSymbolBasedOnPosition(int row_index, int column_index)
     }
     return ' ';
 }
+
+int getNumberBasedOnPosition(int row_index, int column_index)
+{
+        for(auto pn: numbers)
+        {
+            if (pn.row_number == row_index)
+            {
+                if (column_index >= pn.start_column && column_index <= pn.end_column)
+                {
+                    return pn.partNumber;
+                }
+            }
+        }
+    return 0;
+}
+
+vector<EngineSchematic> getStarSymbols()
+{
+    vector<EngineSchematic> star_symbols;
+    for (auto sym: symbols)
+    {
+        if (sym.symbol == '*')
+        {
+            star_symbols.push_back(sym);
+        }
+    }
+
+    return star_symbols;
+}
+
 
 void parseSchematic()
 {
@@ -57,7 +85,7 @@ void parseSchematic()
             int end = start;
             int num = 0;
             while (end < line.length() && isdigit(line.at(end))) {
-                num = num*10 + (line.at(end) - '0');
+                num = num * 10 + (line.at(end) - '0');
                 end++;
             }
 
@@ -73,7 +101,6 @@ void parseSchematic()
             // advance read cursor to end of number
             start = end;
         }
-
 
         row_index++;
     }
@@ -94,10 +121,15 @@ void parseSchematic()
     for (PartNumber pn: numbers)
     {
         // Check diagonal adjacency
-        if(getSymbolBasedOnPosition(pn.row_number - 1, pn.start_column - 1) != ' ' ||
-           getSymbolBasedOnPosition(pn.row_number - 1, pn.end_column + 1) != ' ' ||
-           getSymbolBasedOnPosition(pn.row_number + 1, pn.start_column - 1) != ' ' ||
-           getSymbolBasedOnPosition(pn.row_number + 1, pn.end_column + 1) != ' ')
+        char diagonal_below_left = getSymbolBasedOnPosition(pn.row_number - 1, pn.start_column - 1);
+        char diagonal_below_right = getSymbolBasedOnPosition(pn.row_number - 1, pn.end_column + 1);
+        char diagonal_above_left = getSymbolBasedOnPosition(pn.row_number + 1, pn.start_column - 1);
+        char diagonal_above_right = getSymbolBasedOnPosition(pn.row_number + 1, pn.end_column + 1);
+
+        if(diagonal_below_left != ' ' ||
+           diagonal_below_right != ' ' ||
+           diagonal_above_left != ' ' ||
+           diagonal_above_right != ' ')
         {
             actual_part_numbers.push_back(pn);
         }
@@ -130,4 +162,76 @@ void parseSchematic()
     }
 
     cout << "Part numbers sum is: " << sum << endl;
+
+    // Part 2
+    int gear_ratio_sum = 0;
+    vector<EngineSchematic> star_symbols = getStarSymbols();
+    for (auto sym : star_symbols)
+    {
+        if (debug == true)
+        {
+            cout << sym.symbol << " at row " << sym.row_position << " and column " << sym.column_position << endl;
+        }
+
+        vector<int> adjacent_part_numbers;
+        int pn_count = 0;
+        int part_number_below = getNumberBasedOnPosition(sym.row_position + 1, sym.column_position);
+        int part_number_above = getNumberBasedOnPosition(sym.row_position - 1, sym.column_position);
+        if (part_number_below != 0)
+        {
+            adjacent_part_numbers.push_back(part_number_below);
+        }
+
+        if (part_number_above != 0)
+        {
+            adjacent_part_numbers.push_back(part_number_above);
+        }
+
+        int part_number_left = getNumberBasedOnPosition(sym.row_position, sym.column_position - 1);
+        if (part_number_left != 0)
+            adjacent_part_numbers.push_back(part_number_left);
+
+        int part_number_right = getNumberBasedOnPosition(sym.row_position, sym.column_position + 1);
+        if (part_number_right != 0) adjacent_part_numbers.push_back(part_number_right);
+
+        int part_number_diagonal_above_left = getNumberBasedOnPosition(sym.row_position - 1,
+                                                                       sym.column_position - 1);
+        if (part_number_diagonal_above_left > 0) adjacent_part_numbers.push_back(part_number_diagonal_above_left);
+
+        int part_number_diagonal_below_left = getNumberBasedOnPosition(sym.row_position + 1,
+                                                                       sym.column_position - 1);
+        if (part_number_diagonal_below_left > 0) adjacent_part_numbers.push_back(part_number_diagonal_below_left);
+
+        int part_number_diagonal_above_right = getNumberBasedOnPosition(sym.row_position - 1,
+                                                                       sym.column_position + 1);
+        if (part_number_diagonal_above_right > 0) adjacent_part_numbers.push_back(part_number_diagonal_above_right);
+
+        int part_number_diagonal_below_right = getNumberBasedOnPosition(sym.row_position + 1,
+                                                                       sym.column_position + 1);
+        if (part_number_diagonal_below_right > 0) adjacent_part_numbers.push_back(part_number_diagonal_below_right);
+
+        std::sort(adjacent_part_numbers.begin(), adjacent_part_numbers.end());
+        for(int i = 0; i < adjacent_part_numbers.size() - 1; i++) {
+            if (adjacent_part_numbers[i] == adjacent_part_numbers[i + 1]) {
+                adjacent_part_numbers.erase(adjacent_part_numbers.begin() + i);
+                i--;
+            }
+        }
+
+        if (debug == true)
+        {
+            for (auto ap: adjacent_part_numbers) {
+                cout << ap << " is adjacent to " << sym.symbol << " at [" << sym.row_position << ", "
+                     << sym.column_position << "]." << endl;
+            }
+        }
+
+        if (adjacent_part_numbers.size() == 2)
+        {
+            int gear_ratio = adjacent_part_numbers.at(0) * adjacent_part_numbers.at(1);
+            gear_ratio_sum += gear_ratio;
+        }
+    }
+
+    cout << "Gear ratio sum is: " << gear_ratio_sum << endl;
 }
