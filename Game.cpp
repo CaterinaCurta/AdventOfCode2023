@@ -49,6 +49,7 @@ vector<Game> getGames()
                     }
                 }
 
+                // If index is unnecessary, have a contains-like function
                 if(current_cube.find("green") != string::npos)
                 {
                     string green_number;
@@ -110,7 +111,8 @@ int getSumOfIds()
         {
             if (allGames.at(i).blueCubes.at(j) > 14)
             {
-                bad_cubes++;
+                bad_cubes++; // think about ways to exit the for-loop early and
+                             // skip the other loops
             }
         }
         for (int j = 0; j < allGames.at(i).redCubes.size(); j++)

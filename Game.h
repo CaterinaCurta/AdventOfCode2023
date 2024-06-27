@@ -4,10 +4,10 @@
 #include "Data.h"
 
 using namespace std;
-
+// ALWAYS INITIALIZE VARIABLES ({} - if you don't know what to initialize it to)
 struct Game
 {
-    int gameId;
+    int gameId = 0;
     vector<int> redCubes = {0};
     vector<int> greenCubes = {0};
     vector<int> blueCubes = {0};

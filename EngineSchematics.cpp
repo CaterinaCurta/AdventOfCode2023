@@ -36,7 +36,7 @@ int getNumberBasedOnPosition(int row_index, int column_index)
 vector<EngineSchematic> getStarSymbols()
 {
     vector<EngineSchematic> star_symbols;
-    for (auto sym: symbols)
+    for (const EngineSchematic& sym: symbols)
     {
         if (sym.symbol == '*')
         {
@@ -116,7 +116,7 @@ void parseSchematic()
             cout << "  " << num.partNumber << " on row " << num.row_number << " at [" << num.start_column << "," << num.end_column << "]" << endl;
         }
     }
-
+    
     vector<PartNumber> actual_part_numbers;
     for (PartNumber pn: numbers)
     {
