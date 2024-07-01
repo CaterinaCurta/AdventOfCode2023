@@ -48,14 +48,21 @@ int main() {
     auto start = high_resolution_clock::now();
     parseSchematic();
     auto stop = high_resolution_clock::now();
-
     auto duration = duration_cast<microseconds>(stop - start);
-
     cout << "Time taken by parseSchematic(): " << duration.count() << " microseconds." << endl;
 
+    auto start_pile = high_resolution_clock::now();
     int pile_sum = computePile();
     cout << "Pile sum is: " << pile_sum << endl;
+    auto stop_pile = high_resolution_clock::now();
+    auto duration_pile = duration_cast<microseconds>(stop_pile - start_pile);
+    cout << "Time taken by computePile(): " << duration_pile.count() << " microseconds." << endl;
+
+    auto start_game = high_resolution_clock::now();
     int number_of_scratchcards = countScratchcards();
     cout << "Number of scratchcards: " << number_of_scratchcards << endl;
+    auto stop_game = high_resolution_clock::now();
+    auto duration_game = duration_cast<microseconds>(stop_game - start_game);
+    cout << "Time taken by countScratchcards(): " << duration_game.count() << " microseconds." << endl;
     return 0;
 }

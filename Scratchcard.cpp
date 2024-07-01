@@ -4,6 +4,7 @@
 #include "Scratchcard.h"
 #include "Data.h"
 #include <sstream>
+#include <map>
 
 vector<Scratchcard> scratchcards;
 bool debug_scratchcards = false;
@@ -116,7 +117,6 @@ vector<int> getWinningNumbers(int i)
         {
             if (current_scratchard.winning_numbers.at(j) == current_scratchard.potential_numbers.at(k))
             {
-                cout << "Something is happening: " << current_scratchard.potential_numbers.at(k) << endl;
                 winners.push_back(current_scratchard.potential_numbers.at(k));
             }
         }
@@ -126,41 +126,32 @@ vector<int> getWinningNumbers(int i)
 
 int countScratchcards()
 {
-    //vector<Scratchcard> scratchcards = parseScratchcard();
     vector<int> total_scratchcards;
+    map<int, int> repetitions;
     // initialize each element in instance array to 1
     // because there will always be at least 1 element
     for (int i = 0; i < scratchcards.size(); i++)
     {
-        scratchcards.at(i).instances++;
+        repetitions[i + 1] = 1;
     }
 
-    //cout << "Wtf " << scratchcards.size() << endl;
-    // parse all cards and generate new copies when necessary
     for (int i = 0; i < scratchcards.size(); i++)
     {
-        cout << "Card id: " << scratchcards.at(i).card_id << endl;
-        vector<int> winning_cards = getWinningNumbers(i);
-        // now I need to populate instances
-
-        if (winning_cards.size() == 0) continue;
-        //cout << "Length of winning cards: " << winning_cards.size() << endl;
-        int instance_index = 0;
-        while (instance_index < scratchcards.at(i).instances)
+        int k = 0;
+        vector<int> winning_numbers = getWinningNumbers(i);
+        while (k < repetitions[scratchcards.at(i).card_id])
         {
-            for (int j = 1; j <= winning_cards.size(); j++)
-            {
-                cout << "Winner card: " << scratchcards.at(i).card_id + j << endl;
-                scratchcards.at(scratchcards.at(i).card_id + j).instances++;
+            for (int j = 1; j <= winning_numbers.size(); j++) {
+                repetitions[scratchcards.at(i).card_id + j]++;
             }
-            instance_index++;
+            k = k + 1;
         }
     }
 
-    for (int i = 0; i < scratchcards.size(); i++) {
-        cout << "Card id: " << scratchcards.at(i).card_id << endl;
-        cout << "Number of instances for card " << i + 1 << ": " << scratchcards.at(i).instances << endl;
+    int sum = 0;
+    for (const auto& repetition: repetitions)
+    {
+        sum += repetition.second;
     }
-
-    return total_scratchcards.size();
+    return sum;
 }
