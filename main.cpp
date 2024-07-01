@@ -54,6 +54,8 @@ int main() {
     cout << "Time taken by parseSchematic(): " << duration.count() << " microseconds." << endl;
 
     int pile_sum = computePile();
-    cout << "Pile sum is: " << pile_sum;
+    cout << "Pile sum is: " << pile_sum << endl;
+    int number_of_scratchcards = countScratchcards();
+    cout << "Number of scratchcards: " << number_of_scratchcards << endl;
     return 0;
 }

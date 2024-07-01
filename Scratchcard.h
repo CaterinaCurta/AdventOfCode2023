@@ -9,9 +9,10 @@ using namespace std;
 
 struct Scratchcard
 {
-    int card_id;
-    vector<int> winning_numbers;
-    vector<int> potential_numbers;
+    int card_id = 0;
+    vector<int> winning_numbers = {};
+    vector<int> potential_numbers = {};
+    int instances;
 };
 
 vector<Scratchcard> parseScratchcard();

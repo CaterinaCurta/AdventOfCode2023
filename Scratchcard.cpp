@@ -106,7 +106,61 @@ int computePile()
     return pile_sum;
 }
 
+vector<int> getWinningNumbers(int i)
+{
+    vector<int> winners;
+    Scratchcard current_scratchard = scratchcards.at(i);
+    for (int j = 0; j < current_scratchard.winning_numbers.size(); j++)
+    {
+        for (int k = 0; k < current_scratchard.potential_numbers.size(); k++)
+        {
+            if (current_scratchard.winning_numbers.at(j) == current_scratchard.potential_numbers.at(k))
+            {
+                cout << "Something is happening: " << current_scratchard.potential_numbers.at(k) << endl;
+                winners.push_back(current_scratchard.potential_numbers.at(k));
+            }
+        }
+    }
+    return winners;
+}
+
 int countScratchcards()
 {
-    return 0;
+    //vector<Scratchcard> scratchcards = parseScratchcard();
+    vector<int> total_scratchcards;
+    // initialize each element in instance array to 1
+    // because there will always be at least 1 element
+    for (int i = 0; i < scratchcards.size(); i++)
+    {
+        scratchcards.at(i).instances++;
+    }
+
+    //cout << "Wtf " << scratchcards.size() << endl;
+    // parse all cards and generate new copies when necessary
+    for (int i = 0; i < scratchcards.size(); i++)
+    {
+        cout << "Card id: " << scratchcards.at(i).card_id << endl;
+        vector<int> winning_cards = getWinningNumbers(i);
+        // now I need to populate instances
+
+        if (winning_cards.size() == 0) continue;
+        //cout << "Length of winning cards: " << winning_cards.size() << endl;
+        int instance_index = 0;
+        while (instance_index < scratchcards.at(i).instances)
+        {
+            for (int j = 1; j <= winning_cards.size(); j++)
+            {
+                cout << "Winner card: " << scratchcards.at(i).card_id + j << endl;
+                scratchcards.at(scratchcards.at(i).card_id + j).instances++;
+            }
+            instance_index++;
+        }
+    }
+
+    for (int i = 0; i < scratchcards.size(); i++) {
+        cout << "Card id: " << scratchcards.at(i).card_id << endl;
+        cout << "Number of instances for card " << i + 1 << ": " << scratchcards.at(i).instances << endl;
+    }
+
+    return total_scratchcards.size();
 }
