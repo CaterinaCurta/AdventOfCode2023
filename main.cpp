@@ -1,10 +1,6 @@
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <ctype.h>
 #include <string>
-#include <sstream>
-#include <chrono>
+#include "Almanac.h"
 #include "Game.h"
 #include "EngineSchematics.h"
 #include "Scratchcard.h"
@@ -64,5 +60,7 @@ int main() {
     auto stop_game = high_resolution_clock::now();
     auto duration_game = duration_cast<microseconds>(stop_game - start_game);
     cout << "Time taken by countScratchcards(): " << duration_game.count() << " microseconds." << endl;
+
+    parseAlmanac();
     return 0;
 }

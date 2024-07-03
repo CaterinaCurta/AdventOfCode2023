@@ -2,8 +2,8 @@
 // Created by Caterina  Curta on 2024-06-26.
 //
 #include <vector>
-#ifndef ADVENTOFCODE2023_SCRATCHCARD_H
-#define ADVENTOFCODE2023_SCRATCHCARD_H
+#ifndef SCRATCHCARD_H
+#define SCRATCHCARD_H
 
 using namespace std;
 
@@ -18,4 +18,4 @@ struct Scratchcard
 vector<Scratchcard> parseScratchcard();
 int computePile();
 int countScratchcards();
-#endif //ADVENTOFCODE2023_SCRATCHCARD_H
+#endif //SCRATCHCARD_H
