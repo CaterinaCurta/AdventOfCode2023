@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <tuple>
+#include <sstream>
 #include "Data.h"
 using namespace std;
 
