@@ -16,7 +16,7 @@ void parseAlmanac()
     for (int i = 2; i < data.size(); i++)
     {
         // variable used to check changes
-        if (data.at(i).empty() || i == data.size() - 1)
+        if (data.at(i).empty())
         {
             if (current_mapping.size() > 0) all_maps.push_back(current_mapping);
             cout << "Size of map: " << current_mapping.size() << endl;
@@ -42,6 +42,10 @@ void parseAlmanac()
         {
             cout << "Tuple " << i << ": " << get<0>(current_mapping.at(i)) << ", " << get<1>(current_mapping.at(i))
                  << ", " << get<2>(current_mapping.at(i)) << endl;
+        }
+        if (current_mapping.size() > 0 && i == data.size() - 1)
+        {
+            all_maps.push_back(current_mapping);
         }
     }
 
